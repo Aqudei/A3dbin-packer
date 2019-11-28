@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="243.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.aqudei.binpacker.Controller">
+   <children>
+      <Label fx:id="inputFileLabel" alignment="TOP_CENTER" layoutX="28.0" layoutY="21.0" prefHeight="17.0" prefWidth="354.0" text="[INPUT FILE]" />
+      <Button alignment="TOP_CENTER" layoutX="235.0" layoutY="47.0" mnemonicParsing="false" onAction="#browse" prefHeight="25.0" prefWidth="147.0" text="Browse Input File" textAlignment="CENTER" />
+      <Label fx:id="inputFileLabel1" alignment="TOP_CENTER" layoutX="28.0" layoutY="97.0" prefHeight="17.0" prefWidth="354.0" text="[OUTPUT FOLDER]" />
+      <Button alignment="TOP_CENTER" layoutX="304.0" layoutY="178.0" mnemonicParsing="false" onAction="#run" prefHeight="25.0" prefWidth="76.0" text="Run" textAlignment="CENTER" />
+      <ProgressBar fx:id="progressBar" layoutX="28.0" layoutY="211.0" prefHeight="18.0" prefWidth="354.0" progress="0.0" />
+      <Button alignment="TOP_CENTER" layoutX="235.0" layoutY="122.0" mnemonicParsing="false" onAction="#browse" text="Browse Output Directory" textAlignment="CENTER" />
+   </children>
+</AnchorPane>

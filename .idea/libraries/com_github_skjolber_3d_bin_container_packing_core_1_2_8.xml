@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.github.skjolber.3d-bin-container-packing:core:1.2.8" type="repository">
+    <properties maven-id="com.github.skjolber.3d-bin-container-packing:core:1.2.8" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/core-1.2.8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/core-1.2.8-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
