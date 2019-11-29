@@ -4,17 +4,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellAddress;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class Controller implements Initializable {
@@ -34,58 +30,47 @@ public class Controller implements Initializable {
         statusText.setText("Ready");
     }
 
-    private ContainerData readSheet(Sheet sheet) throws Exception {
-        ContainerData data = new ContainerData();
-
-        Iterator<Row> rows = sheet.rowIterator();
-        while (rows.hasNext()) {
-            Row row = rows.next();
+    private Part parseRow(Row row) {
+        try {
             Iterator<Cell> cells = row.cellIterator();
             Part newPart = new Part();
+            newPart.setPartQuantity((int) row.getCell(0).getNumericCellValue());
+            newPart.setLength(row.getCell(1).getNumericCellValue());
+            newPart.setWidth(row.getCell(2).getNumericCellValue());
+            newPart.setHeight(row.getCell(3).getNumericCellValue());
+            return newPart;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
-            while (cells.hasNext()) {
+
+    private ContainerData readSheet(Sheet sheet) throws Exception {
+        ContainerData data = new ContainerData();
+        Iterator<Row> rows = sheet.rowIterator();
+        int rowCount = 0;
+        while (rows.hasNext()) {
+            Row row = rows.next();
+
+            if (rowCount == 1) {
                 try {
-                    Cell cell = cells.next();
-
-                    if (cell.getAddress().toString() == "B2") {
-                        double containerWidth = cell.getNumericCellValue();
-                        data.setContainerWidth(containerWidth);
-                    }
-
-                    if (cell.getAddress().toString() == "C2") {
-                        double containerHeight = cell.getNumericCellValue();
-                        data.setContainerHeight(containerHeight);
-                    }
-
-                    if (cell.getRowIndex() >= 10) {
-                        if (cell.getColumnIndex() == 0) {
-                            newPart.setPartQuantity((int) cell.getNumericCellValue());
-                        }
-                        if (cell.getColumnIndex() == 1) {
-                            newPart.setLength(cell.getNumericCellValue());
-                        }
-                        if (cell.getColumnIndex() == 2) {
-                            newPart.setWidth(cell.getNumericCellValue());
-                        }
-                        if (cell.getColumnIndex() == 3) {
-                            newPart.setHeight(cell.getNumericCellValue());
-                        }
-                    }
-                } catch (Exception error) {
-                    System.err.println(error.getMessage());
+                    data.setContainerWidth(row.getCell(1).getNumericCellValue());
+                    data.setContainerHeight(row.getCell(2).getNumericCellValue());
+                    rowCount++;
+                    continue;
+                } catch (Exception e) {
+                    System.err.println("Unable to fetch Container Dimension!");
+                    return null;
                 }
             }
 
-            data.getParts().add(newPart);
-        }
+            Part part = parseRow(row);
+            if (part == null) {
+                continue;
+            }
 
-        if (data.getContainerHeight() == 0) {
-            throw new Exception("Unable to Determine Container Height!");
+            data.getParts().add(part);
         }
-        if (data.getContainerWidth() == 0) {
-            throw new Exception("Unable to Determine Container Width!");
-        }
-
 
         return data;
     }
