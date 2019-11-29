@@ -1,5 +1,6 @@
 package dev.aqudei.binpacker;
 
+import com.github.skjolber.packing.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,10 +35,12 @@ public class Controller implements Initializable {
         try {
             Iterator<Cell> cells = row.cellIterator();
             Part newPart = new Part();
-            newPart.setPartQuantity((int) row.getCell(0).getNumericCellValue());
-            newPart.setLength(row.getCell(1).getNumericCellValue());
-            newPart.setWidth(row.getCell(2).getNumericCellValue());
-            newPart.setHeight(row.getCell(3).getNumericCellValue());
+            newPart.setPartName(row.getCell(0).getStringCellValue());
+            newPart.setPartQuantity((int) row.getCell(1).getNumericCellValue());
+            newPart.setLength(row.getCell(2).getNumericCellValue());
+            newPart.setWidth(row.getCell(3).getNumericCellValue());
+            newPart.setHeight(row.getCell(4).getNumericCellValue());
+            newPart.setWeight(row.getCell(5).getNumericCellValue());
             return newPart;
         } catch (Exception e) {
             return null;
@@ -49,19 +52,27 @@ public class Controller implements Initializable {
         ContainerData data = new ContainerData();
         Iterator<Row> rows = sheet.rowIterator();
         int rowCount = 0;
+
         while (rows.hasNext()) {
             Row row = rows.next();
 
             if (rowCount == 1) {
                 try {
+                    data.setContainerLength(row.getCell(0).getNumericCellValue());
                     data.setContainerWidth(row.getCell(1).getNumericCellValue());
                     data.setContainerHeight(row.getCell(2).getNumericCellValue());
+                    data.setContainerWeight(row.getCell(3).getNumericCellValue());
                     rowCount++;
                     continue;
                 } catch (Exception e) {
                     System.err.println("Unable to fetch Container Dimension!");
                     return null;
                 }
+            }
+
+            if (rowCount < 1) {
+                rowCount++;
+                continue;
             }
 
             Part part = parseRow(row);
@@ -85,6 +96,26 @@ public class Controller implements Initializable {
         Workbook workbook = WorkbookFactory.create(inputFile);
         Sheet sheet = workbook.getSheetAt(0);
         ContainerData data = readSheet(sheet);
+        if (data == null)
+            return;
+
+        // initialization
+        List<Container> containers = new ArrayList<Container>();
+        Packager packager = new LargestAreaFitFirstPackager(containers);
+        containers.add(new Container((int) data.getContainerWidth(), (int) data.getContainerLength(),
+                (int) data.getContainerHeight(), (int) data.getContainerWeight())); // x y z and weight
+        List<BoxItem> products = new ArrayList<BoxItem>();
+
+        for (int i = 0; i < data.getParts().size(); i++) {
+            Part part = data.getParts().get(i);
+            products.add(new BoxItem(new Box(part.getPartName(), (int)part.getWidth(),
+                    (int)part.getLength(), (int)part.getHeight(), (int)part.getWeight()), part.getPartQuantity()));
+        }
+
+        Container match = packager.pack(products);
+
+
+
     }
 
     public void browse() {

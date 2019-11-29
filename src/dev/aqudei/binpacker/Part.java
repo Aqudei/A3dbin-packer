@@ -3,10 +3,12 @@ package dev.aqudei.binpacker;
 import java.util.Objects;
 
 public class Part {
-    int partQuantity;
-    double length;
-    double width;
-    double height;
+    private int partQuantity;
+    private double length;
+    private double width;
+    private double height;
+    private double weight;
+    private String partName;
 
     public int getPartQuantity() {
         return partQuantity;
@@ -62,5 +64,21 @@ public class Part {
     @Override
     public int hashCode() {
         return Objects.hash(partQuantity, length, width, height);
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public String getPartName() {
+        return partName;
+    }
+
+    public void setPartName(String partName) {
+        this.partName = partName;
     }
 }

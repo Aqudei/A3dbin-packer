@@ -5,7 +5,9 @@ import java.util.List;
 
 public class ContainerData {
     private double containerWidth;
+    private double containerLength;
     private double containerHeight;
+    private double containerWeight;
     private List<Part> parts;
 
     public ContainerData() {
@@ -34,5 +36,21 @@ public class ContainerData {
 
     public void setParts(List<Part> parts) {
         this.parts = parts;
+    }
+
+    public double getContainerLength() {
+        return containerLength;
+    }
+
+    public void setContainerLength(double containerLength) {
+        this.containerLength = containerLength;
+    }
+
+    public double getContainerWeight() {
+        return containerWeight;
+    }
+
+    public void setContainerWeight(double containerWeight) {
+        this.containerWeight = containerWeight;
     }
 }
