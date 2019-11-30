@@ -4,10 +4,9 @@ import java.util.Objects;
 
 public class Part {
     private int partQuantity;
-    private double length;
-    private double width;
-    private double height;
-    private double weight;
+    private int length;
+    private int width;
+    private int height;
     private String partName;
 
     public int getPartQuantity() {
@@ -22,7 +21,7 @@ public class Part {
         return length;
     }
 
-    public void setLength(double length) {
+    public void setLength(int length) {
         this.length = length;
     }
 
@@ -30,7 +29,7 @@ public class Part {
         return width;
     }
 
-    public void setWidth(double width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
@@ -38,7 +37,7 @@ public class Part {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
@@ -66,13 +65,6 @@ public class Part {
         return Objects.hash(partQuantity, length, width, height);
     }
 
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
 
     public String getPartName() {
         return partName;

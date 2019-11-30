@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContainerData {
-    private double containerWidth;
-    private double containerLength;
-    private double containerHeight;
-    private double containerWeight;
+    private int containerWidth;
+    private int containerLength;
+    private int containerHeight;
     private List<Part> parts;
 
     public ContainerData() {
@@ -18,7 +17,7 @@ public class ContainerData {
         return containerWidth;
     }
 
-    public void setContainerWidth(double containerWidth) {
+    public void setContainerWidth(int containerWidth) {
         this.containerWidth = containerWidth;
     }
 
@@ -26,7 +25,7 @@ public class ContainerData {
         return containerHeight;
     }
 
-    public void setContainerHeight(double containerHeight) {
+    public void setContainerHeight(int containerHeight) {
         this.containerHeight = containerHeight;
     }
 
@@ -42,15 +41,7 @@ public class ContainerData {
         return containerLength;
     }
 
-    public void setContainerLength(double containerLength) {
+    public void setContainerLength(int containerLength) {
         this.containerLength = containerLength;
-    }
-
-    public double getContainerWeight() {
-        return containerWeight;
-    }
-
-    public void setContainerWeight(double containerWeight) {
-        this.containerWeight = containerWeight;
     }
 }
